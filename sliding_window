@@ -1,0 +1,76 @@
+import java.util.*;
+public class sliding_window {
+
+    public static void main(String[] args ){
+        //largest subarray with sum k;
+        int[] array = new int[]{7,1,1,1,2,3,3};
+           int res= largest_subarray(array,6);
+           System.out.println(res);
+
+           // largest sum of subarray length 2
+           int  b=largest_sum(array,2);
+           System.out.println(b);
+           // longest substring with unique characters
+           String str = "abcdabbcertyuiopcddd";
+           int c = longest_unique_char(str);
+           System.out.println(c);
+
+
+           // maximum number of vowels in a substing of given length
+
+
+    }
+    public static int largest_subarray( int[] array,int k){
+        int total_track =0;
+        int max =0;
+        int start =0;
+        for(int end =0;end < array.length;end++){
+            total_track+=array[end];
+            while(total_track>k){
+                total_track-=array[start];
+                start++;
+            }
+        if(total_track==k){
+        max = Math.max(max,end-start+1);}
+
+        }
+    
+    return max;
+    }
+     public static int largest_sum(int[] array, int k){
+        int max;
+        int sum=0;
+        for(int i=0;i<k;i++){
+            sum+=array[i];
+
+        }
+        max = sum;
+        for(int i=k;i<array.length;i++){
+            sum -=array[i-k];
+            sum+=array[i];
+            max = Math.max(max,sum);
+        }
+        return max;
+     }
+
+      public static int longest_unique_char(String str ){
+         int max_len =0;
+         int start =0;
+        HashSet<Character> set = new HashSet<>();
+        for(int i =0;i<str.length();i++){
+            char end_char = str.charAt(i);
+             while(set.contains(end_char)){
+                 char start_char = str.charAt(start);
+                set.remove(start_char);
+                start++;
+
+             }
+             set.add(end_char);
+             max_len= Math.max(max_len,i-start+1);
+        }
+        return max_len;
+      }
+
+
+    
+}
